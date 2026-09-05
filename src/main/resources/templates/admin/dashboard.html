@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin | DonVictor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+
+<body>
+
+
+    <!-- Botón para abrir sidebar en móvil -->
+    <!-- Botón para abrir sidebar en móvil -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand" style="display: flex; align-items: center; gap: 12px;">
+            <img th:src="@{/img/Logo_admin.jpg}" alt="Logo" width="50" height="50"
+                style="border-radius: 45%; object-fit: cover; flex-shrink: 0;">
+            <div>
+                <span style="display: block; font-weight: bold; font-size: 16px;">DonVictor</span>
+                <small style="display: block; font-size: 11px; opacity: 0.7;">Panel Admin</small>
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li th:class="${pagina == 'dashboard' ? 'active' : ''}">
+                <a th:href="@{/admin/dashboard}"><i class="fas fa-chart-pie"></i> Inicio</a>
+            </li>
+            <li th:class="${pagina == 'productos' ? 'active' : ''}">
+                <a th:href="@{/admin/productos}"><i class="fas fa-box"></i> Productos</a>
+            </li>
+            <li th:class="${pagina == 'usuarios' ? 'active' : ''}">
+                <a th:href="@{/admin/usuarios}"><i class="fas fa-users"></i> Usuarios</a>
+            </li>
+            <li th:class="${pagina == 'pedidos' ? 'active' : ''}">
+                <a th:href="@{/admin/pedidos}"><i class="fas fa-shopping-cart"></i> Ordenes</a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <!-- ✅ BOTÓN PARA VER EL SITIO WEB -->
+            <a th:href="@{/}" target="_blank" class="btn btn-outline-light w-100 mb-2"
+                style="border-radius: 10px; padding: 10px; font-size: 0.85rem; border-color: rgba(255,255,255,0.2);">
+                <i class="fas fa-external-link-alt me-2"></i> Ver sitio web
+            </a>
+
+            <a th:href="@{/logout}" class="btn btn-logout">
+                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+            </a>
+        </div>
+        <div class="sidebar-footer">
+            <a th:href="@{/logout}" class="btn btn-logout">
+                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+            </a>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="top-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4>Panel de Control</h4>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="text-muted small">Bienvenido, <strong th:text="${adminNombre}">Admin</strong></span>
+                </div>
+            </div>
+            <p class="text-muted small">Resumen general del negocio</p>
+        </div>
+
+        <!-- Tarjetas de estadísticas -->
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-primary">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 th:text="${totalProductos}">12</h3>
+                        <span>Productos</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-success">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 th:text="${totalUsuarios}">8</h3>
+                        <span>Usuarios</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-warning">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 th:text="${totalOrdenes}">12</h3>
+                        <span>Órdenes</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-danger">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>S/ <span th:text="${totalIngresos}">1294.00</span></h3>
+                        <span>Ingresos (S/)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de órdenes recientes -->
+        <div class="card mt-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Ordenes Recientes</h5>
+                <a th:href="@{/admin/pedidos}" class="btn btn-sm btn-outline-danger">
+                    <i class="fas fa-arrow-right me-1"></i> Ver todas
+                </a>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Orden</th>
+                                <th>Cliente</th>
+                                <th>Productos</th>
+                                <th>Total</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${#lists.isEmpty(listaPedidos)}">
+                                <td colspan="6" class="text-center py-3 text-muted">No hay órdenes registradas en el
+                                    sistema.</td>
+                            </tr>
+
+                            <tr th:each="pedido : ${listaPedidos}">
+                                <td><strong th:text="'ORD-' + ${pedido.id}">ORD-000</strong></td>
+                                <td th:text="${pedido.nombreCliente}">Nombre Cliente</td>
+                                <td><span>Delivery</span></td>
+                                <td class="fw-bold text-danger" th:text="'S/ ' + ${pedido.total}">S/ 0.00</td>
+                                <td
+                                    th:text="${pedido.fechaPedido != null ? #temporals.format(pedido.fechaPedido, 'dd/MM/yyyy hh:mm a') : 'Sin fecha'}">
+                                    Fecha</td>
+                                <td>
+                                    <span class="badge" th:classappend="${pedido.estado == 'PENDIENTE' ? 'bg-warning text-dark' : 
+                                   (pedido.estado == 'COMPLETADO' ? 'bg-success' : 
+                                   (pedido.estado == 'CANCELADO' ? 'bg-danger' : 'bg-info'))}"
+                                        th:text="${pedido.estado}">Pendiente</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== TOGGLE SIDEBAR ==========      
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('active');
+            }
+        }
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/admin.js}"></script>
+</body>
+
+</html>

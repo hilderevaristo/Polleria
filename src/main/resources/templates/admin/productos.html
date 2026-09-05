@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos | Panel Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <!-- ✅ AGREGAR SWEETALERT2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+
+
+
+    <!-- Botón para abrir sidebar en móvil -->
+    <!-- Botón para abrir sidebar en móvil -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand" style="display: flex; align-items: center; gap: 12px;">
+            <img th:src="@{/img/Logo_admin.jpg}" alt="Logo" width="50" height="50"
+                style="border-radius: 45%; object-fit: cover; flex-shrink: 0;">
+            <div>
+                <span style="display: block; font-weight: bold; font-size: 16px;">DonVictor</span>
+                <small style="display: block; font-size: 11px; opacity: 0.7;">Panel Admin</small>
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a th:href="@{/admin/dashboard}"><i class="fas fa-chart-pie"></i> Inicio</a></li>
+            <li class="active"><a th:href="@{/admin/productos}"><i class="fas fa-box"></i> Productos</a></li>
+            <li><a th:href="@{/admin/usuarios}"><i class="fas fa-users"></i> Usuarios</a></li>
+            <li><a th:href="@{/admin/pedidos}"><i class="fas fa-shopping-cart"></i> Ordenes</a></li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <!-- ✅ BOTÓN PARA VER EL SITIO WEB -->
+            <a th:href="@{/}" target="_blank" class="btn btn-outline-light w-100 mb-2"
+                style="border-radius: 10px; padding: 10px; font-size: 0.85rem; border-color: rgba(255,255,255,0.2);">
+                <i class="fas fa-external-link-alt me-2"></i> Ver sitio web
+            </a>
+
+            <a th:href="@{/logout}" class="btn btn-logout">
+                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+            </a>
+        </div>
+        <div class="sidebar-footer">
+            <a th:href="@{/logout}" class="btn btn-logout">
+                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+            </a>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <div class="top-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h4>Productos</h4>
+                    <p class="text-muted small">Gestiona el menú de DonVictor</p>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="text-muted small">Bienvenido, <strong th:text="${adminNombre}">Admin</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón Agregar Producto -->
+        <div class="mb-3">
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalNuevoProducto">
+                <i class="fas fa-plus me-2"></i> Nuevo Producto
+            </button>
+        </div>
+
+        <!-- Buscador -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0">
+                        <i class="fas fa-search text-muted"></i>
+                    </span>
+                    <input type="text" id="buscadorProductos" class="form-control border-start-0"
+                        placeholder="Buscar por nombre o categoría..." onkeyup="filtrarProductos()">
+                    <button class="btn btn-outline-secondary" type="button" onclick="filtrarProductos()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de productos -->
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Productos</h5>
+                <span class="badge bg-primary" th:text="${totalProductos}">0</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0" id="tablaProductos">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width: 40%;">Producto</th>
+                                <th style="width: 20%;">Categoría</th>
+                                <th style="width: 15%;">Precio</th>
+                                <th style="width: 25%;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${#lists.isEmpty(listaProductos)}">
+                                <td colspan="4" class="text-center py-4 text-muted">No hay productos registrados en el
+                                    menú.</td>
+                            </tr>
+
+                            <tr th:each="producto : ${listaProductos}">
+                                <td>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <!-- ✅ CLOUDINARY -->
+                                        <img th:if="${producto.imagenUrl != null and producto.imagenUrl.startsWith('http')}"
+                                            th:src="${producto.imagenUrl}" th:alt="${producto.nombre}"
+                                            style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid #eee;"
+                                            onerror="this.src='https://ui-avatars.com/api/?name=' + encodeURIComponent(this.alt) + '&background=dc3545&color=fff&size=60'">
+
+                                        <!-- ✅ LOCAL -->
+                                        <img th:if="${producto.imagenUrl != null and !producto.imagenUrl.startsWith('http')}"
+                                            th:src="'/' + ${producto.imagenUrl}" th:alt="${producto.nombre}"
+                                            style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid #eee;"
+                                            onerror="this.src='https://ui-avatars.com/api/?name=' + encodeURIComponent(this.alt) + '&background=dc3545&color=fff&size=60'">
+
+                                        <!-- ✅ SIN IMAGEN -->
+                                        <img th:unless="${producto.imagenUrl != null}"
+                                            th:src="'https://ui-avatars.com/api/?name=' + ${producto.nombre} + '&background=dc3545&color=fff&size=60'"
+                                            th:alt="${producto.nombre}"
+                                            style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid #eee; background: #f8f9fa;">
+
+                                        <div>
+                                            <div class="fw-semibold" th:text="${producto.nombre}">Nombre Producto</div>
+                                            <small class="text-muted"
+                                                th:text="${producto.descripcion}">Descripción</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary px-2 py-1.5"
+                                        style="border-radius: 6px; font-size: 0.85rem;"
+                                        th:text="${producto.categoria}">Categoría</span>
+                                </td>
+                                <td class="fw-bold text-danger">S/ <span th:text="${producto.precio}">0.00</span></td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-sm btn-outline-primary btn-editar-producto"
+                                            th:attr="data-id=${producto.id}" onclick="editarProducto(this)">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" th:attr="data-id=${producto.id}"
+                                            onclick="eliminarProducto(this.getAttribute('data-id'))">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ============================================================ -->
+    <!-- MODAL PARA NUEVO PRODUCTO -->
+    <!-- ============================================================ -->
+    <div class="modal fade" id="modalNuevoProducto" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: 1px solid #f0f0f0; padding: 20px 30px;">
+                    <h5 class="modal-title fw-bold" style="color: #1a1a2e;">
+                        <i style="color: #dc3545;"></i> Nuevo Producto
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNuevoProducto" th:action="@{/admin/productos/guardar}" method="post">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Nombre <span class="text-danger">*</span></label>
+                                    <input type="text" name="nombre" class="form-control"
+                                        placeholder="Ej: Combo Familiar" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Descripción</label>
+                                    <textarea name="descripcion" class="form-control" rows="2"
+                                        placeholder="Descripción del producto..."></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Precio (S/) <span
+                                            class="text-danger">*</span></label>
+                                    <input type="number" step="0.01" name="precio" class="form-control"
+                                        placeholder="0.00" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Categoría <span
+                                            class="text-danger">*</span></label>
+                                    <select name="categoria" class="form-control" required>
+                                        <option value="">Seleccionar...</option>
+                                        <option value="Pollos">Pollos</option>
+                                        <option value="Promociones">Promociones</option>
+                                        <option value="Piqueos">Piqueos</option>
+                                        <option value="Hamburguesas">Hamburguesas</option>
+                                        <option value="Wraps">Wraps</option>
+                                        <option value="Acompañamientos">Acompañamientos</option>
+                                        <option value="Postres">Postres</option>
+                                        <option value="Bebidas">Bebidas</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">URL de imagen</label>
+                                    <input type="text" name="imagenUrl" class="form-control"
+                                        placeholder="https://res.cloudinary.com/...">
+                                    <small class="text-muted">Pega la URL de Cloudinary</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 justify-content-end"
+                            style="border-top: 1px solid #f0f0f0; padding-top: 20px;">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+                                style="border-radius: 12px; padding: 10px 28px; font-weight: 600; font-size: 0.95rem;">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-danger"
+                                style="border-radius: 12px; padding: 10px 28px; font-weight: 600; font-size: 0.95rem;">
+                                Crear producto
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MODAL PARA EDITAR PRODUCTO -->
+    <div class="modal fade" id="modalEditarProducto" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 550px;">
+            <div class="modal-content"
+                style="border-radius: 24px; border: none; box-shadow: 0 20px 60px rgba(0,0,0,0.12);">
+                <div class="modal-header" style="border-bottom: 1px solid #f0f0f0; padding: 20px 28px;">
+                    <h5 class="modal-title fw-bold" style="color: #1a1a2e; font-size: 1.2rem;">
+                        <i style="color: #dc3545;"></i> Editar Producto
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" style="padding: 28px; background-color: #ffffff;">
+                    <form id="formEditarProducto" action="/admin/productos/actualizar" method="post">
+                        <input type="hidden" name="id" id="edit-id">
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nombre <span class="text-danger">*</span></label>
+                            <input type="text" name="nombre" id="edit-nombre" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Categoría <span class="text-danger">*</span></label>
+                            <select name="categoria" id="edit-categoria" class="form-control" required>
+                                <option value="Pollos">Pollos</option>
+                                <option value="Promociones">Promociones</option>
+                                <option value="Piqueos">Piqueos</option>
+                                <option value="Hamburguesas">Hamburguesas</option>
+                                <option value="Wraps">Wraps</option>
+                                <option value="Acompañamientos">Acompañamientos</option>
+                                <option value="Postres">Postres</option>
+                                <option value="Bebidas">Bebidas</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Descripción</label>
+                            <textarea name="descripcion" id="edit-descripcion" class="form-control" rows="2"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">URL de imagen</label>
+                            <input type="text" name="imagenUrl" id="edit-imagenUrl" class="form-control">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Precio (S/) <span class="text-danger">*</span></label>
+                            <input type="number" step="0.01" name="precio" id="edit-precio" class="form-control"
+                                required>
+                        </div>
+
+                        <div class="d-flex gap-2 justify-content-end"
+                            style="border-top: 1px solid #f0f0f0; padding-top: 20px;">
+                            <button type="button" class="btn btn-outline-secondary"
+                                data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger">
+                                Guardar cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // ========== TOGGLE SIDEBAR ==========
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('active');
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/productos.js}"></script>
+
+</body>
+
+</html>
