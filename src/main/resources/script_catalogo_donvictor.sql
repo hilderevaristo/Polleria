@@ -32,3 +32,8 @@ INSERT INTO productos (nombre, precio, imagen_url, categoria, descripcion) VALUE
 ('Gaseosa 1 L', 9.00, 'secciones/Bebidas/gaseosa_1L.png', 'Bebidas', 'Gaseosa 1 Litro.'),
 ('Gaseosa 1.5 L', 12.00, 'secciones/Bebidas/Gaseosa1.5L.png', 'Bebidas', 'Gaseosa 1.5 Litros.'),
 ('Chicha Morada 1.5 L', 14.00, 'secciones/Bebidas/chicha_morada_1.5L.png', 'Bebidas', 'Chicha artesanal.');
+
+INSERT INTO usuarios 
+(nombre, email, telefono, password, rol, fecha_registro)
+VALUES 
+('Administrador', 'admin@gmail.com', '999999999', 'admin123', 'ADMIN', NOW());
