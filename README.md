@@ -2,7 +2,9 @@
 
 # comando para ver mis commit y si estan puesto su tag
 git log --oneline
-git push origin v1.0.0
+git push origin v1.0.0 
+git push origin --delete v1.1.0  <!-- eliminar un tag  repo -->
+git tag -d v1.1.0                 <!-- PC -->
 ## 1. Descripción del proyecto
 
 **Polleria** es una aplicación web para la pollería **Don Víctor**. El sistema permite mostrar un catálogo de productos, gestionar usuarios y direcciones, armar un carrito y registrar pedidos con delivery o recojo en el local. También incluye un panel administrativo para consultar y administrar productos, usuarios y pedidos.
