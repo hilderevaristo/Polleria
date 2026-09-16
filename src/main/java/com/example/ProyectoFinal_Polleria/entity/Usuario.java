@@ -29,9 +29,9 @@ public class Usuario {
     
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro;
-    
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-private List<Direccion> direcciones;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Direccion> direcciones;
     
     // Constructores
     public Usuario() {}
