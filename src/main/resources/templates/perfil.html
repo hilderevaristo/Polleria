@@ -71,25 +71,45 @@
                     </div>
                     <div class="card-body p-4">
                         <form th:action="@{/perfil/cambiar-password}" method="post" id="formPassword">
+
+                            <!-- Contraseña Actual -->
                             <div class="mb-3">
-                                <label class="form-label text-muted small fw-bold">Contraseña Actual</label>
-                                <input type="password" name="passwordActual" class="form-control bg-light" required>
+                                <label for="passwordActual" class="form-label text-muted small fw-bold">Contraseña Actual</label>
+                                <div class="input-group">
+                                    <input type="password" name="passwordActual" id="passwordActual" class="form-control bg-light" required>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('passwordActual', this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
                             </div>
+
+                            <!-- Nueva Contraseña -->
                             <div class="mb-3">
-                                <label class="form-label text-muted small fw-bold">Nueva Contraseña</label>
-                                <input type="password" name="nuevaPassword" id="nuevaPassword" class="form-control bg-light" required>
+                                <label for="nuevaPassword" class="form-label text-muted small fw-bold">Nueva Contraseña</label>
+                                <div class="input-group">
+                                    <input type="password" name="nuevaPassword" id="nuevaPassword" class="form-control bg-light" required>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('nuevaPassword', this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
                             </div>
+
+                            <!-- Confirmar Nueva Contraseña -->
                             <div class="mb-4">
-                                <label class="form-label text-muted small fw-bold">Confirmar Nueva Contraseña</label>
-                                <input type="password" id="confirmarPassword" class="form-control bg-light" required>
+                                <label for="confirmarPassword" class="form-label text-muted small fw-bold">Confirmar Nueva Contraseña</label>
+                                <div class="input-group">
+                                    <input type="password" id="confirmarPassword" class="form-control bg-light" required>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('confirmarPassword', this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
                                 <span id="errorPassword" class="text-danger small mt-1" style="display: none;">Las contraseñas no coinciden.</span>
                             </div>
+
                             <button type="submit" class="btn btn-outline-danger w-100 rounded-pill fw-bold">Actualizar Contraseña</button>
                         </form>
                     </div>
                 </div>
-
-            </div>
 
             <!-- Columna Derecha: Libreta de Direcciones -->
             <div class="col-lg-7">
@@ -198,5 +218,5 @@
     <!-- Script específico del perfil -->
     <script th:src="@{/js/perfil.js}"></script>
 
-</body>
+  </body>
 </html>

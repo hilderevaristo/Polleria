@@ -61,7 +61,7 @@
 
 @keyframes shrinkBar {
     0% { width: 100%; }
-    100% { width: 0%; }
+    100% { width: 0; }
 }
 
 .fade-out-toast {
