@@ -1,5 +1,5 @@
 INSERT INTO productos (nombre, precio, imagen_url, categoria, descripcion) VALUES
-('Promo Familiar', 79.00, 'secciones/promociones/Promocion1.png', 'Promociones', '1 Pollo + Papas fritas + Ensalada + Tequeños'),
+('Promo Familiar', 79.00, 'secciones/promociones/Promocion1.png', 'Promociones', '1 Pollo + Papa fritas + Ensalada + Tequeños'),
 ('Promo Gaseosa', 89.00, 'secciones/promociones/Promocion2.png', 'Promociones', '1 Pollo + Papas + Ensalada + Gaseosa 1L'),
 ('Promo Peruana', 92.00, 'secciones/promociones/Promocion3.png', 'Promociones', '1 Pollo + Papas + Ensalada + Chicha 1.5L'),
 ('Promo Dúo', 49.00, 'secciones/promociones/promocion4.png', 'Promociones', '1/2 Pollo + Papas + Ensalada + 2 Gaseosas 500ml'),
