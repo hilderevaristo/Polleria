@@ -1,10 +1,5 @@
 # README del proyecto
 
-# comando para ver mis commit y si estan puesto su tag
-git log --oneline
-git push origin v1.0.0  <!-- para subir/enciar a github -->
-git push origin --delete v1.1.0  <!-- eliminar un tag  repo -->
-git tag -d v1.1.0               <!--   eliminar en PC -->
 ## 1. Descripción del proyecto
 
 **Polleria** es una aplicación web para la pollería **Don Víctor**. El sistema permite mostrar un catálogo de productos, gestionar usuarios y direcciones, armar un carrito y registrar pedidos con delivery o recojo en el local. También incluye un panel administrativo para consultar y administrar productos, usuarios y pedidos.
@@ -315,3 +310,10 @@ Actualmente no se ha especificado una licencia. El `pom.xml` contiene una secci�
 ## 16. Estado del proyecto
 
 **En desarrollo.** El proyecto tiene un flujo web implementado, pero la prueba automatizada de contexto falla actualmente por la discrepancia de paquetes indicada en la sección de pruebas. Además, la cobertura automatizada es mínima, la configuración de credenciales está escrita en propiedades locales y el código referencia las vistas `admin/productos-editar` y `admin/productos-nuevo`, que no están presentes en la estructura actual revisada. Por ello, debe validarse el flujo administrativo completo antes de considerarlo terminado.
+
+
+# comando para ver mis commit y si estan puesto su tag
+git log --oneline
+git push origin v1.0.0  <!-- para subir/enciar a github -->
+git push origin --delete v1.1.0  <!-- eliminar un tag  repo -->
+git tag -d v1.1.0               <!--   eliminar en PC -->
