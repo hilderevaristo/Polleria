@@ -34,7 +34,12 @@
 
                 <div class="form-group">
                     <label class="form-label">Contraseña</label>
-                    <input type="password" name="password" class="form-control" placeholder="********" required>
+                    <div class="input-group">
+                        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="********" required>
+                        <button class="btn btn-outline-secondary" type="button" id="btnTogglePassword" style="border-color: #ced4da;">
+                            <i class="fas fa-eye" id="iconoOjo"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="checkbox-wrapper">
