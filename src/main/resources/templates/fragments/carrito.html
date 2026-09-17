@@ -1,9 +1,9 @@
 <div th:fragment="carrito">
-    <button class="btn-carrito-flotante" onclick="abrirCarrito()" th:if="${session.usuario != null}">
+    <button class="btn-carrito-flotante" onclick="abrirCarrito()" th:if="${session.usuario != null and session.usuario.rol != 'ADMIN'}">
         🛒 <span id="carrito-cantidad" class="badge bg-danger rounded-pill">0</span>
     </button>
 
-    <div id="carrito-sidebar" class="carrito-sidebar" th:if="${session.usuario != null}">
+    <div id="carrito-sidebar" class="carrito-sidebar" th:if="${session.usuario != null and session.usuario.rol != 'ADMIN'}">
         <div class="carrito-header">
             <h3 id="sidebar-title" class="m-0 text-danger fw-bold">
                 <i class="fas fa-shopping-cart"></i> Tu Carrito
@@ -48,7 +48,7 @@
                 <form id="form-pedido">
     <input type="text" id="cli-nombre" class="form-control mb-3 custom-input"
         placeholder="Nombre completo" th:value="${session.usuario != null ? session.usuario.nombre : ''}" required>
-    <input type="tel" id="cli-telefono" class="form-control mb-3 custom-input" 
+    <input type="tel" id="cli-telefono" class="form-control mb-3 custom-input"
         placeholder="Teléfono" th:value="${session.usuario != null ? session.usuario.telefono : ''}" required>
 
     <h6 class="fw-bold mb-3">Tipo de entrega</h6>
@@ -67,9 +67,9 @@
         <label class="form-label small fw-bold text-muted">Dirección de entrega</label>
         <select id="cli-direccion" class="form-control mb-3 custom-input" required>
             <option value="" disabled th:selected="${session.usuario == null or #lists.isEmpty(direcciones)}">Selecciona una dirección...</option>
-            
-            <option th:each="dir : ${session.usuario?.direcciones}" 
-        th:value="${dir.direccionExacta}" 
+
+            <option th:each="dir : ${session.usuario?.direcciones}"
+        th:value="${dir.direccionExacta}"
         th:text="${dir.alias} + ': ' + ${dir.direccionExacta}"
         th:selected="${dir.esPredeterminada}">
 </option>

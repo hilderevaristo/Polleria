@@ -635,6 +635,21 @@ public Map<String, Object> eliminarPedido(@RequestParam Long id) {
 
         Map<String, Object> response = new HashMap<>();
 
+        // 🚫 EL ADMINISTRADOR NO PUEDE REALIZAR PEDIDOS
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+        if (usuario == null) {
+            response.put("success", false);
+            response.put("message", "Debes iniciar sesión para realizar un pedido");
+            return response;
+        }
+
+        if ("ADMIN".equalsIgnoreCase(usuario.getRol())) {
+            response.put("success", false);
+            response.put("message", "El administrador no puede realizar pedidos");
+            return response;
+        }
+
         try {
             String nombreCliente = (String) pedidoData.get("nombreCliente");
             String telefonoCliente = (String) pedidoData.get("telefonoCliente");
@@ -642,7 +657,6 @@ public Map<String, Object> eliminarPedido(@RequestParam Long id) {
             String metodoPago = (String) pedidoData.get("metodoPago");
             String tipoEntrega = (String) pedidoData.get("tipoEntrega");
 
-            Usuario usuario = (Usuario) session.getAttribute("usuario");
 
             // Crear pedido
             Pedido pedido = new Pedido();

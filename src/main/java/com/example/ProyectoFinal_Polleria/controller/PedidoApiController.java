@@ -12,7 +12,8 @@ import com.example.ProyectoFinal_Polleria.entity.Producto;
 import com.example.ProyectoFinal_Polleria.repository.DetallePedidoRepository;
 import com.example.ProyectoFinal_Polleria.repository.PedidoRepository;
 import com.example.ProyectoFinal_Polleria.repository.ProductoRepository;
-
+import jakarta.servlet.http.HttpSession;
+import com.example.ProyectoFinal_Polleria.entity.Usuario;
 import java.time.LocalDateTime;
 
 @RestController
@@ -29,7 +30,22 @@ public class PedidoApiController {
     private ProductoRepository productoRepository;
 
     @PostMapping("/guardar")
-    public ResponseEntity<?> guardarPedido(@RequestBody PedidoRequest request) {
+    public ResponseEntity<?> guardarPedido(
+            @RequestBody PedidoRequest request,
+            HttpSession session) {
+
+        // 🚫 EL ADMINISTRADOR NO PUEDE REALIZAR PEDIDOS
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+        if (usuario == null) {
+            return ResponseEntity.status(401)
+                    .body("Debes iniciar sesión para realizar un pedido");
+        }
+
+        if ("ADMIN".equalsIgnoreCase(usuario.getRol())) {
+            return ResponseEntity.status(403)
+                    .body("El administrador no puede realizar pedidos");
+        }
         try {
             // 1. Crear e instanciar el Pedido Maestro
             Pedido pedido = new Pedido();

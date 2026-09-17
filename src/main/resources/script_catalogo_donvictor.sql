@@ -4,6 +4,7 @@ INSERT INTO productos (nombre, precio, imagen_url, categoria, descripcion) VALUE
 ('Promo Peruana', 92.00, 'secciones/promociones/Promocion3.png', 'Promociones', '1 Pollo + Papas + Ensalada + Chicha 1.5L'),
 ('Promo Dúo', 49.00, 'secciones/promociones/promocion4.png', 'Promociones', '1/2 Pollo + Papas + Ensalada + 2 Gaseosas 500ml'),
 ('Promo Mega Familiar', 159.00, 'secciones/promociones/promocion5.png', 'Promociones', '2 Pollos + 2 Papas + 2 Ensaladas + Gaseosa 1.5L'),
+('Promo Entre Patas', 200.00, 'secciones/promociones/promocion6.png', 'Promociones', '2 Pollos + 4 Papas + 1 Ensalada Extra Grande + 2 Chaufas + 2 Gaseosas 1.5L'),
 ('1/4 Pollo (Pierna)', 25.00, 'secciones/pollos/1-4pollo.png', 'Pollos', 'Papas fritas y ensalada.'),
 ('1/4 Pollo (Pecho)', 27.00, 'secciones/pollos/1-4pollopecho.png', 'Pollos', 'Papas fritas y ensalada.'),
 ('1/2 Pollo', 45.00, 'secciones/pollos/1-2pollo.png', 'Pollos', 'Papas fritas y ensalada.'),
