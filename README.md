@@ -8,7 +8,7 @@ Aquí se encuentran los Gists utilizados para compartir, revisar y colaborar en 
 | ------------------- | --------------------------------------------------- |
 | **Hilder Evaristo** | [Ver Gists](https://gist.github.com/hilderevaristo) |
 | **Jhon Sullca**     | [Ver Gists](https://gist.github.com/JhonSullca)     |
-| **Eduardo Chespa**  | [Ver Gists](https://gist.github.com/Educhespa)      |
+| **Luis paico**  | [Ver Gists](https://gist.github.com/Educhespa)      |
 | **Pamela Tirado**   | [Ver Gists](https://gist.github.com/Pamela-Tirado)  |
 
 ## 1. Descripción del proyecto
