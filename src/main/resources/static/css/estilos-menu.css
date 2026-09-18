@@ -143,3 +143,15 @@
     color: #fff;
     border-color: #c0392b;
 }
+/* --- Efectos para tarjetas de estadísticas de "Nosotros" --- */
+.stat-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid transparent;
+    cursor: default;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px); /* Eleva la tarjeta */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Agrega sombra suave */
+    border: 1px solid #cd0f0f; /* Borde rojo que combina con la paleta */
+}
