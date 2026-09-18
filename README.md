@@ -1,5 +1,16 @@
 # README del proyecto
 
+## 📝 Gists de los colaboradores
+
+Aquí se encuentran los Gists utilizados para compartir, revisar y colaborar en fragmentos de código del proyecto:
+
+| 👤 Colaborador      | 🔗 Gist                                             |
+| ------------------- | --------------------------------------------------- |
+| **Hilder Evaristo** | [Ver Gists](https://gist.github.com/hilderevaristo) |
+| **Jhon Sullca**     | [Ver Gists](https://gist.github.com/JhonSullca)     |
+| **Eduardo Chespa**  | [Ver Gists](https://gist.github.com/Educhespa)      |
+| **Pamela Tirado**   | [Ver Gists](https://gist.github.com/Pamela-Tirado)  |
+
 ## 1. Descripción del proyecto
 
 **Polleria** es una aplicación web para la pollería **Don Víctor**. El sistema permite mostrar un catálogo de productos, gestionar usuarios y direcciones, armar un carrito y registrar pedidos con delivery o recojo en el local. También incluye un panel administrativo para consultar y administrar productos, usuarios y pedidos.
