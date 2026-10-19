@@ -21,5 +21,9 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
+    # ESTE ES EL PASO NUEVO QUE SOLUCIONA EL ERROR
+    - name: Dar permisos al Maven Wrapper
+      run: chmod +x mvnw
+
     - name: Compilar con Maven
       run: ./mvnw clean package -DskipTests
