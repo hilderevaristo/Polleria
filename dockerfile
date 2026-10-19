@@ -15,8 +15,8 @@ RUN mvn dependency:go-offline -B
 # Copia el código fuente
 COPY src src/
 
-# Compila el proyecto
-RUN mvn clean package -DskipTests
+# Compila el proyecto (usando el wrapper)
+RUN ./mvnw clean package -DskipTests
 
 # Segunda etapa: imagen liviana para ejecutar
 FROM eclipse-temurin:17-jre-alpine
