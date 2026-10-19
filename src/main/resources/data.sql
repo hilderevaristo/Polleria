@@ -36,4 +36,4 @@ INSERT INTO productos (nombre, precio, imagen_url, categoria, descripcion) VALUE
 INSERT INTO usuarios 
 (nombre, email, telefono, password, rol, fecha_registro)
 VALUES 
-('Administrador', 'admin@gmail.com', '999999999', 'admin123', 'ADMIN', NOW());
+('Administrador', 'admin@donvictor.com', '948593758', 'admin123', 'ADMIN', NOW());
