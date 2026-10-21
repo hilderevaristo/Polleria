@@ -1,9 +1,9 @@
 name: Validar Docker - Luis
 
-# Cuándo se ejecuta: al subir cambios o al abrir un pull request en main
+# Cuándo se ejecuta: al subir cambios a main o a mi rama, o al abrir un pull request en main
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master", "luis" ]
   pull_request:
     branches: [ "main", "master" ]
   workflow_dispatch:   # permite ejecutarlo a mano con un botón
