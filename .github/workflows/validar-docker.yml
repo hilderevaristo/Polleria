@@ -1,0 +1,26 @@
+name: Validar Docker - Luis
+
+# Cuándo se ejecuta: al subir cambios o al abrir un pull request en main
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:   # permite ejecutarlo a mano con un botón
+
+jobs:
+  construir-imagen:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Descargar el código del repositorio
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      # 2. Construir la imagen Docker usando tu archivo dockerfile
+      - name: Construir imagen Docker
+        run: docker build -f dockerfile -t polleria-app .
+
+      # 3. Mostrar que la imagen se creó correctamente
+      - name: Verificar imagen
+        run: docker images polleria-app
