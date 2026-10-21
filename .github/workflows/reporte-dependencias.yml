@@ -1,0 +1,47 @@
+name: Reporte de dependencias - Luis
+
+# Cuándo se ejecuta: al subir cambios a main o a mi rama, o al abrir un pull request en main
+on:
+  push:
+    branches: [ "main", "master", "luis" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:   # permite ejecutarlo a mano con un botón
+
+jobs:
+  revisar-dependencias:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Descargar el código del repositorio
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      # 2. Instalar Java 17
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      # 3. Dar permisos al Maven Wrapper
+      - name: Dar permisos a mvnw
+        run: chmod +x mvnw
+
+      # 4. Listar todas las dependencias que usa el proyecto
+      - name: Listar dependencias
+        run: ./mvnw -B dependency:tree | tee dependencias.txt
+
+      # 5. Buscar dependencias con versiones más nuevas
+      - name: Buscar actualizaciones
+        run: ./mvnw -B org.codehaus.mojo:versions-maven-plugin:2.16.2:display-dependency-updates | tee actualizaciones.txt
+
+      # 6. Guardar los dos reportes para poder descargarlos
+      - name: Guardar reportes
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-dependencias
+          path: |
+            dependencias.txt
+            actualizaciones.txt
