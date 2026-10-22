@@ -14,7 +14,7 @@ INSERT INTO productos (nombre, precio, imagen_url, categoria, descripcion) VALUE
 ('Tequeños de Queso', 18.00, 'secciones/piqueos/tequenos_queso.png', 'Piqueos', 'Tequeños artesanales de queso.'),
 ('Salchipapa Brasa', 24.00, 'secciones/piqueos/salchipapa_brasa.png', 'Piqueos', 'Con trozos de pollo a la brasa.'),
 ('Hamburguesa Clásica', 20.00, 'secciones/hamburguesas/hamburguesa_clasica.png', 'Hamburguesas', 'Hamburguesa clásica.'),
-('Hamburguesa con Tocino', 23.00, 'secciones//hamburguesas/hamburguesa_tocino.png', 'Hamburguesas', 'Con tocino crocante.'),
+('Hamburguesa con Tocino', 23.00, 'secciones/hamburguesas/hamburguesa_tocino.png', 'Hamburguesas', 'Con tocino crocante.'),
 ('Hamburguesa Crispy Chicken', 24.00, 'secciones/hamburguesas/hamburguesa_crispy_chicken.png', 'Hamburguesas', 'Pollo crujiente.'),
 ('Hamburguesa Doble Carne', 28.00, 'secciones/hamburguesas/hamburguesa_doble_carne.png', 'Hamburguesas', 'Doble carne jugosa.'),
 ('Wrap de Pollo a la Brasa', 18.00, 'secciones/Warp/wrap_pollo_brasa.png', 'Wraps', 'Pollo a la brasa en tortilla.'),
@@ -33,7 +33,6 @@ INSERT INTO productos (nombre, precio, imagen_url, categoria, descripcion) VALUE
 ('Gaseosa 1.5 L', 12.00, 'secciones/Bebidas/Gaseosa1.5L.png', 'Bebidas', 'Gaseosa 1.5 Litros.'),
 ('Chicha Morada 1.5 L', 14.00, 'secciones/Bebidas/chicha_morada_1.5L.png', 'Bebidas', 'Chicha artesanal.');
 
-INSERT INTO usuarios 
-(nombre, email, telefono, password, rol, fecha_registro)
-VALUES 
-('Administrador', 'admin@donvictor.com', '948593758', 'admin123', 'ADMIN', NOW());
+
+INSERT IGNORE INTO usuarios (nombre, email, telefono, password, rol, fecha_registro) 
+VALUES ('Administrador', 'admin@donvictor.com', '948593758', 'admin123', 'ADMIN', NOW());
