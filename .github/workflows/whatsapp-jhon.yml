@@ -1,0 +1,29 @@
+
+name: Validacion WhatsApp - Jhon
+
+on:
+  push:
+    branches:
+      - jhon
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validar-whatsapp:
+    name: Validar proyecto Spring Boot
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Compilar proyecto
+        run: chmod +x mvnw && ./mvnw -B -DskipTests package

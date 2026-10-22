@@ -138,15 +138,22 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+
 function abrirCheckout() {
-    if (carrito.length === 0) return;
+    if (carrito.length === 0) {
+        alert("Tu carrito está vacío.");
+        return;
+    }
 
     document.getElementById('vista-carrito').style.display = 'none';
     document.getElementById('vista-checkout').style.display = 'flex';
-    document.getElementById('sidebar-title').innerHTML = '<i class="fas fa-receipt"></i> Finalizar Pedido';
+
+    document.getElementById('sidebar-title').innerHTML =
+        '<i class="fas fa-receipt"></i> Finalizar Pedido';
 
     actualizarTotalesCheckout();
 }
+
 
 
 // NUEVA FUNCIÓN: Actualiza la matemática del checkout
@@ -166,75 +173,160 @@ function actualizarTotalesCheckout() {
 }
 
 // NUEVA FUNCIÓN: Cambia entre Delivery y Recojo
+
 function seleccionarTipoEntrega(botonClickeado) {
-    // Cambiar estilos de los botones de entrega
-    document.querySelectorAll('button[data-tipo]').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('button[data-tipo]').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
     botonClickeado.classList.add('active');
 
     tipoEntregaActual = botonClickeado.getAttribute('data-tipo');
+
     const contenedorDireccion = document.getElementById('contenedor-direccion');
     const contenedorPagos = document.getElementById('contenedor-metodos-pago');
 
-    if (tipoEntregaActual === "Delivery") {
+    if (tipoEntregaActual === 'Delivery') {
         costoDelivery = 5.00;
-        contenedorDireccion.style.display = "block";
+
+        contenedorDireccion.style.display = 'block';
+
         contenedorPagos.innerHTML = `
-            <button type="button" class="btn btn-pago-final active w-50" data-metodo="Contraentrega" onclick="seleccionarPagoFinal(this)">
+            <button type="button"
+                class="btn btn-pago-final active w-50"
+                data-metodo="Contraentrega"
+                onclick="seleccionarPagoFinal(this)">
                 💵 Contraentrega
             </button>
-            <button type="button" class="btn btn-pago-final w-50" data-metodo="Yape" onclick="seleccionarPagoFinal(this)">
+
+            <button type="button"
+                class="btn btn-pago-final w-50"
+                data-metodo="Yape"
+                onclick="seleccionarPagoFinal(this)">
                 📱 Yape
             </button>
         `;
     } else {
         costoDelivery = 0.00;
-        contenedorDireccion.style.display = "none";
+
+        contenedorDireccion.style.display = 'none';
+
         contenedorPagos.innerHTML = `
-            <button type="button" class="btn btn-pago-final active w-100" data-metodo="Pago en caja" onclick="seleccionarPagoFinal(this)">
+            <button type="button"
+                class="btn btn-pago-final active w-100"
+                data-metodo="Pago en caja"
+                onclick="seleccionarPagoFinal(this)">
                 🏪 Pago en caja (Local)
             </button>
         `;
     }
+
     actualizarTotalesCheckout();
 }
+
 
 function seleccionarPagoFinal(botonClickeado) {
     document.querySelectorAll('.btn-pago-final').forEach(btn => btn.classList.remove('active'));
     botonClickeado.classList.add('active');
 }
 
+
 function confirmarPedido() {
-    const nombre = document.getElementById('cli-nombre').value;
-    const telefono = document.getElementById('cli-telefono').value;
-    
-    let direccion = "";
-    if (tipoEntregaActual === "Delivery") {
-        const selectDir = document.getElementById('cli-direccion');
-        
-        if (selectDir) {
-            if (selectDir.value === 'OTRA') {
-                direccion = document.getElementById('cli-direccion-manual').value;
-            } else {
-                direccion = selectDir.value;
-            }
-        }
-        
-        if (!direccion) {
-            alert("Por favor, selecciona o ingresa tu dirección de entrega.");
-            return;
-        }
-    } else {
-        direccion = "Recojo en el local";
-    }
+    const nombre = document.getElementById('cli-nombre').value.trim();
+    const telefono = document.getElementById('cli-telefono').value.trim();
 
-    const botonPagoActivo = document.querySelector('.btn-pago-final.active');
-    const metodoPago = botonPagoActivo ? botonPagoActivo.getAttribute('data-metodo') : "Contraentrega";
-
-    if (!nombre || !telefono) {
-        alert("Por favor, completa tus datos de contacto.");
+    if (carrito.length === 0) {
+        alert('Tu carrito está vacío.');
         return;
     }
 
+    if (!nombre || !telefono) {
+        alert('Por favor, completa tus datos de contacto.');
+        return;
+    }
+
+    // Obtener la dirección de entrega
+    let direccion = '';
+
+    if (tipoEntregaActual === 'Delivery') {
+        const selectDir = document.getElementById('cli-direccion');
+
+        if (!selectDir || !selectDir.value) {
+            alert('Selecciona una dirección de entrega.');
+            return;
+        }
+
+        if (selectDir.value === 'OTRA') {
+            const direccionManual =
+                document.getElementById('cli-direccion-manual');
+
+            direccion = direccionManual
+                ? direccionManual.value.trim()
+                : '';
+
+            if (!direccion) {
+                alert('Escribe tu dirección de entrega.');
+                return;
+            }
+        } else {
+            direccion = selectDir.value.trim();
+        }
+    } else {
+        direccion = 'Recojo en el local';
+    }
+
+    // Obtener el método de pago seleccionado
+    const botonPagoActivo = document.querySelector('.btn-pago-final.active');
+
+    const metodoPago = botonPagoActivo
+        ? botonPagoActivo.getAttribute('data-metodo')
+        : 'Contraentrega';
+
+    // Calcular los importes
+    const subtotal = carrito.reduce(
+        (suma, item) => suma + item.precio * item.cantidad,
+        0
+    );
+
+    const delivery = tipoEntregaActual === 'Delivery'
+        ? costoDelivery
+        : 0;
+
+    const total = subtotal + delivery;
+
+    // Construir la lista de productos
+    const productos = carrito.map(item =>
+        `• ${item.nombre} x${item.cantidad} - S/ ${(item.precio * item.cantidad).toFixed(2)}`
+    ).join('\n');
+
+    // Crear el mensaje de WhatsApp
+    const mensaje = [
+        '🍗 *NUEVO PEDIDO RECIBIDO* 🍗 - POLLERÍA DON VÍCTOR*',
+        '',
+        '*PRODUCTOS:*',
+        productos,
+        '',
+        `Subtotal: S/ ${subtotal.toFixed(2)}`,
+        `Delivery: S/ ${delivery.toFixed(2)}`,
+        `*TOTAL: S/ ${total.toFixed(2)}*`,
+        '',
+        '*DATOS DEL CLIENTE:*',
+        `Nombre: ${nombre}`,
+        `Teléfono: ${telefono}`,
+        `Entrega: ${tipoEntregaActual}`,
+        `Dirección: ${direccion}`,
+        `Método de pago: ${metodoPago}`,
+        '',
+        'Por favor, confirmar el pedido. ¡Gracias!'
+    ].join('\n');
+
+    // Número de WhatsApp del negocio: Perú +51
+    const numeroWhatsApp = '51935058266';
+
+    const urlWhatsApp =
+        `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+    // Preparar los datos que se guardarán en el sistema
     const pedidoData = {
         nombreCliente: nombre,
         telefonoCliente: telefono,
@@ -242,33 +334,57 @@ function confirmarPedido() {
         metodoPago: metodoPago,
         tipoEntrega: tipoEntregaActual,
         items: carrito.map(item => ({
-            productoId: parseInt(item.id),
+            productoId: parseInt(item.id, 10),
             cantidad: item.cantidad,
             precioUnitario: item.precio
         }))
     };
 
-    // El punto rojo desaparecerá aquí porque toda la estructura superior quedó limpia
+    // Abrir una ventana vacía para evitar que el navegador bloquee WhatsApp
+    const ventanaWhatsApp = window.open('about:blank', '_blank');
+
+    // Guardar el pedido antes de abrir WhatsApp
     fetch('/procesarPedido', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(pedidoData)
     })
-    .then(response => {
-        if (response.ok) {
+        .then(async response => {
+            const resultado = await response.json();
+
+            if (!response.ok || resultado.success !== true) {
+                throw new Error(
+                    resultado.message || 'No se pudo guardar el pedido.'
+                );
+            }
+
+            // Redirigir la ventana a WhatsApp
+            if (ventanaWhatsApp && !ventanaWhatsApp.closed) {
+                ventanaWhatsApp.location.href = urlWhatsApp;
+            } else {
+                window.location.href = urlWhatsApp;
+            }
+
+            // Limpiar el carrito y mostrar la confirmación
             carrito = [];
-            document.getElementById('carrito-cantidad').innerText = '0';
+            actualizarCarrito();
+
             document.getElementById('vista-checkout').style.display = 'none';
             document.getElementById('vista-exito').style.display = 'flex';
-        } else {
-            alert('Error al confirmar el pedido');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error al procesar el pedido');
-    });
+        })
+        .catch(error => {
+            console.error('Error al confirmar el pedido:', error);
+
+            if (ventanaWhatsApp && !ventanaWhatsApp.closed) {
+                ventanaWhatsApp.close();
+            }
+
+            alert(error.message || 'Error al procesar el pedido.');
+        });
 }
+
 
 function volverAlCarrito() {
     document.getElementById('vista-checkout').style.display = 'none';

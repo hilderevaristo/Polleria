@@ -129,3 +129,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Lógica para mostrar / ocultar contraseña
+document.addEventListener('DOMContentLoaded', function () {
+    const btnTogglePassword = document.getElementById('btnTogglePassword');
+    const inputPassword = document.getElementById('inputPassword');
+    const iconoOjo = document.getElementById('iconoOjo');
+
+    if (btnTogglePassword && inputPassword && iconoOjo) {
+        btnTogglePassword.addEventListener('click', function () {
+            const esPassword = inputPassword.type === 'password';
+
+            // Cambiar tipo de input
+            inputPassword.type = esPassword ? 'text' : 'password';
+
+            // Alternar ícono de FontAwesome
+            iconoOjo.className = esPassword ? 'fas fa-eye-slash' : 'fas fa-eye';
+        });
+    }
+});

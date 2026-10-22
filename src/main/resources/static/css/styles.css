@@ -276,7 +276,7 @@ body {
 .hero-section {
     position: relative;
     min-height: 100vh;
-    background-image: url('/img/Fondo.png');
+    background-image: url('/img/Pollofondo.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

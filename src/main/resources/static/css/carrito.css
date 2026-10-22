@@ -130,3 +130,38 @@
 .btn-pago-final:hover {
     border-color: #c0392b;
 }
+
+/* =========================================
+   Corrección de la vista de checkout
+   ========================================= */
+
+#vista-checkout {
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+}
+
+#vista-checkout .carrito-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+#vista-checkout .carrito-footer {
+    display: block;
+    flex: 0 0 auto;
+    position: relative;
+    z-index: 2;
+    padding: 15px 20px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+}
+
+#vista-checkout .carrito-footer button {
+    display: block;
+    width: 100%;
+    visibility: visible;
+    opacity: 1;
+    position: relative;
+}
