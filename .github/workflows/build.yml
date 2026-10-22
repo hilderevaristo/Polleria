@@ -2,9 +2,9 @@ name: Build Spring Boot Polleria
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master", "hilder" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "main", "master", "hilder" ]
 
 jobs:
   build:
