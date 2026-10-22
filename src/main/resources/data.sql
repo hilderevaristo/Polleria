@@ -34,5 +34,11 @@ INSERT INTO productos (nombre, precio, imagen_url, categoria, descripcion) VALUE
 ('Chicha Morada 1.5 L', 14.00, 'secciones/Bebidas/chicha_morada_1.5L.png', 'Bebidas', 'Chicha artesanal.');
 
 
-INSERT IGNORE INTO usuarios (nombre, email, telefono, password, rol, fecha_registro) 
-VALUES ('Administrador', 'admin@donvictor.com', '948593758', 'admin123', 'ADMIN', NOW());
+INSERT INTO usuarios (nombre, email, telefono, password, rol, fecha_registro)
+SELECT 'Administrador', 'admin@donvictor.com', '948593758',
+       'admin123', 'ADMIN', NOW()
+    WHERE NOT EXISTS (
+    SELECT 1
+    FROM usuarios
+    WHERE email = 'admin@donvictor.com'
+);
