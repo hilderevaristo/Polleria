@@ -1,9 +1,9 @@
- name: Keep Render Alive
+name: Keep Render Alive
 
 on:
   schedule:
     # Se ejecuta cada 10 minutos
-    - cron: '*/10 * * * *'
+    cron: '*/10 * * * *'
   workflow_dispatch: # Permite ejecutarlo manualmente desde GitHub
 
 jobs:
@@ -11,5 +11,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ping to Render
-        # ⚠️ CAMBIA ESTO POR TU URL REAL DE RENDER
         run: curl -s https://polleria-ydsv.onrender.com > /dev/null
