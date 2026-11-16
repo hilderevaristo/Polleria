@@ -1,4 +1,4 @@
-INSERT INTO productos (nombre, precio, imagen_url, categoria, descripcion) VALUES
+/* INSERT INTO productos (nombre, precio, imagen_url, categoria, descripcion) VALUES
 ('Promo Familiar', 79.00, 'secciones/promociones/Promocion1.png', 'Promociones', '1 Pollo + Papas fritas + Ensalada + Tequeños'),
 ('Promo Gaseosa', 89.00, 'secciones/promociones/Promocion2.png', 'Promociones', '1 Pollo + Papas + Ensalada + Gaseosa 1L'),
 ('Promo Peruana', 92.00, 'secciones/promociones/Promocion3.png', 'Promociones', '1 Pollo + Papas + Ensalada + Chicha 1.5L'),
@@ -44,4 +44,4 @@ SELECT 'Administrador', 'admin@donvictor.com', '948593758',
     SELECT 1
     FROM usuarios
     WHERE email = 'admin@donvictor.com'
-);
+); */
