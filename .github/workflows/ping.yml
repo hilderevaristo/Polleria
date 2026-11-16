@@ -12,4 +12,4 @@ jobs:
     steps:
       - name: Ping to Render
         # ⚠️ CAMBIA ESTO POR TU URL REAL DE RENDER
-        run: curl -s https://polleria-xxxx.onrender.com > /dev/null
+        run: curl -s https://polleria-ydsv.onrender.com > /dev/null
