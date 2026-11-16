@@ -9,6 +9,9 @@ COPY .mvn .mvn/
 COPY mvnw .
 COPY mvnw.cmd .
 
+# Dar permisos de ejecución al wrapper (importante para Linux/Render)
+RUN chmod +x mvnw
+
 # Descarga dependencias (mejora el caché)
 RUN ./mvnw dependency:go-offline -B
 
